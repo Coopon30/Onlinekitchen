@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Bites - Home</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Quick Bites 🍳</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="recipes.html">Recipes</a>
+            <a href="about.html">About Us</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h2>Find Your Perfect Recipe</h2>
+            <p>Don't know what to cook? Answer a few questions to find the perfect easy recipe!</p>
+        </section>
+
+        <section id="recipe-finder">
+            <h3>Recipe Finder Quiz</h3>
+            <form id="quiz-form">
+                <div class="question">
+                    <p>What meal are you looking for?</p>
+                    <input type="radio" id="breakfast" name="meal" value="breakfast">
+                    <label for="breakfast">Breakfast</label><br>
+                    <input type="radio" id="lunch" name="meal" value="lunch">
+                    <label for="lunch">Lunch</label><br>
+                    <input type="radio" id="dinner" name="meal" value="dinner">
+                    <label for="dinner">Dinner</label>
+                </div>
+
+                <div class="question">
+                    <p>What's your main ingredient preference?</p>
+                    <input type="radio" id="chicken" name="ingredient" value="chicken">
+                    <label for="chicken">Chicken</label><br>
+                    <input type="radio" id="veggie" name="ingredient" value="veggie">
+                    <label for="veggie">Veggies</label><br>
+                     <input type="radio" id="any" name="ingredient" value="any">
+                    <label for="any">Anything!</label>
+                </div>
+                <button type="button" onclick="findRecipe()">Find Recipe</button>
+            </form>
+            <div id="recipe-suggestion"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Quick Bites</p>
+    </footer>
+
+    <script>
+        function findRecipe() {
+            const meal = document.querySelector('input[name="meal"]:checked');
+            const ingredient = document.querySelector('input[name="ingredient"]:checked');
+            const suggestion = document.getElementById('recipe-suggestion');
+
+            if (!meal || !ingredient) {
+                suggestion.innerHTML = `<p>Please answer all questions!</p>`;
+                return;
+            }
+
+            let recipeLink = '';
+            if (meal.value === 'breakfast' && (ingredient.value === 'veggie' || ingredient.value === 'any')) {
+                recipeLink = '<h2>Try our Perfect Pancakes!</h2><a href="recipes.html#pancakes">Get the Recipe</a>';
+            } else if (meal.value === 'lunch' && ingredient.value === 'veggie') {
+                recipeLink = '<h2>How about a Grilled Cheese?</h2><a href="recipes.html#grilled-cheese">Get the Recipe</a>';
+            } else if (meal.value === 'dinner' && ingredient.value === 'chicken') {
+                 recipeLink = '<h2>Easy Chicken Quesadillas are a great choice!</h2><a href="recipes.html#quesadillas">Get the Recipe</a>';
+            } else {
+                recipeLink = '<h2>Check out all our recipes on the recipes page!</h2><a href="recipes.html">See All Recipes</a>';
+            }
+            suggestion.innerHTML = recipeLink;
+        }
+    </script>
+
+</body>
+</html>
