@@ -23,62 +23,74 @@
             <p>Don't know what to cook? Answer a few questions to find the perfect easy recipe!</p>
         </section>
 
-        <section id="recipe-finder">
-            <h3>Recipe Finder Quiz</h3>
-            <form id="quiz-form">
-                <div class="question">
-                    <p>What meal are you looking for?</p>
-                    <input type="radio" id="breakfast" name="meal" value="breakfast">
-                    <label for="breakfast">Breakfast</label><br>
-                    <input type="radio" id="lunch" name="meal" value="lunch">
-                    <label for="lunch">Lunch</label><br>
-                    <input type="radio" id="dinner" name="meal" value="dinner">
-                    <label for="dinner">Dinner</label>
-                </div>
+      <section id="recipe-generator">
+    <h2>AI Recipe Generator 🧑‍🍳</h2>
+    <p>Enter a dish you want to make and a few key ingredients. The AI will write the recipe for you!</p>
+    
+    <div class="form-container">
+        <label for="recipe-name">Dish Name:</label>
+        <input type="text" id="recipe-name" placeholder="e.g., Spicy Chicken Pasta">
 
-                <div class="question">
-                    <p>What's your main ingredient preference?</p>
-                    <input type="radio" id="chicken" name="ingredient" value="chicken">
-                    <label for="chicken">Chicken</label><br>
-                    <input type="radio" id="veggie" name="ingredient" value="veggie">
-                    <label for="veggie">Veggies</label><br>
-                     <input type="radio" id="any" name="ingredient" value="any">
-                    <label for="any">Anything!</label>
-                </div>
-                <button type="button" onclick="findRecipe()">Find Recipe</button>
-            </form>
-            <div id="recipe-suggestion"></div>
-        </section>
-    </main>
+        <label for="ingredients">Key Ingredients:</label>
+        <textarea id="ingredients" rows="3" placeholder="e.g., chicken breast, pasta, garlic, chili flakes"></textarea>
 
-    <footer>
-        <p>&copy; 2025 Quick Bites</p>
-    </footer>
+        <button id="generate-btn" class="button">Generate Recipe</button>
+    </div>
 
-    <script>
-        function findRecipe() {
-            const meal = document.querySelector('input[name="meal"]:checked');
-            const ingredient = document.querySelector('input[name="ingredient"]:checked');
-            const suggestion = document.getElementById('recipe-suggestion');
+    <div id="recipe-output-container">
+        <div id="loader" class="hidden"></div>
+        <div id="recipe-output"></div>
+    </div>
+</section>
 
-            if (!meal || !ingredient) {
-                suggestion.innerHTML = `<p>Please answer all questions!</p>`;
-                return;
-            }
+<script>
+    const generateBtn = document.getElementById('generate-btn');
+    const recipeNameInput = document.getElementById('recipe-name');
+    const ingredientsInput = document.getElementById('ingredients');
+    const recipeOutput = document.getElementById('recipe-output');
+    const loader = document.getElementById('loader');
 
-            let recipeLink = '';
-            if (meal.value === 'breakfast' && (ingredient.value === 'veggie' || ingredient.value === 'any')) {
-                recipeLink = '<h2>Try our Perfect Pancakes!</h2><a href="recipes.html#pancakes">Get the Recipe</a>';
-            } else if (meal.value === 'lunch' && ingredient.value === 'veggie') {
-                recipeLink = '<h2>How about a Grilled Cheese?</h2><a href="recipes.html#grilled-cheese">Get the Recipe</a>';
-            } else if (meal.value === 'dinner' && ingredient.value === 'chicken') {
-                 recipeLink = '<h2>Easy Chicken Quesadillas are a great choice!</h2><a href="recipes.html#quesadillas">Get the Recipe</a>';
-            } else {
-                recipeLink = '<h2>Check out all our recipes on the recipes page!</h2><a href="recipes.html">See All Recipes</a>';
-            }
-            suggestion.innerHTML = recipeLink;
+    generateBtn.addEventListener('click', async () => {
+        const recipeName = recipeNameInput.value;
+        const ingredients = ingredientsInput.value;
+
+        if (!recipeName || !ingredients) {
+            alert('Please fill out both fields!');
+            return;
         }
-    </script>
+
+        // Show loader and clear previous output
+        loader.classList.remove('hidden');
+        recipeOutput.innerHTML = '';
+
+        try {
+            // This sends the data to our secure backend function
+            const response = await fetch('/api/generate-recipe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ recipeName, ingredients }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Something went wrong on the server.');
+            }
+
+            const data = await response.json();
+            
+            // Format the output with line breaks
+            recipeOutput.innerHTML = data.recipe.replace(/\n/g, '<br>');
+
+        } catch (error) {
+            recipeOutput.textContent = 'Failed to generate recipe. Please try again.';
+            console.error(error);
+        } finally {
+            // Hide loader
+            loader.classList.add('hidden');
+        }
+    });
+</script>
 
 </body>
 </html>
