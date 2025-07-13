@@ -1,0 +1,124 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background-color: #ff7f50;
+    color: white;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav {
+    margin-top: 10px;
+}
+
+nav a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero {
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+#recipe-finder {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.question {
+    margin-bottom: 15px;
+}
+
+#recipe-finder button {
+    background-color: #ff7f50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#recipe-finder button:hover {
+    background-color: #e66a40;
+}
+
+#recipe-suggestion {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+#recipe-suggestion a {
+    color: #ff7f50;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.recipe-list .recipe-card {
+    background-color: #fff;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.recipe-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.recipe-card h3 {
+    color: #ff7f50;
+}
+
+.recipe-card ul, .recipe-card ol {
+    padding-left: 20px;
+}
+
+.about-us {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.about-us p {
+    line-height: 1.6;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #333;
+    color: white;
+}
